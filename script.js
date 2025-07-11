@@ -66,16 +66,27 @@ function generateCardHTML() {
 function updatePreview() {
   const iframe = document.getElementById('previewFrame');
   iframe.srcdoc = generateCardHTML();
+   if (iframe) {
+    iframe.srcdoc = cardHTML;
+  }
 }
-
-
 function downloadCard() {
-  const blob = new Blob([generateCardHTML()], { type: "text/html" });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = "cardsy_gift_card.html";
+  const cardHTML = generateCardHTML();
+  const blob = new Blob([cardHTML], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "cardsy_card-${Date.now()}.html";
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url); // Clean up
 }
+
+
+
+
 function resetForm() {
   // Clear all input values
   document.getElementById('bgInput').value = "";
