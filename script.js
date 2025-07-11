@@ -80,18 +80,17 @@ function generateCardHTML() {
 </html>
 `;
 }
-
-// Live preview in iframe
 function updatePreview() {
-  const iframe = document.getElementById('previewFrame');
+  const iframe = document.getElementById("previewFrame");
   const cardHTML = generateCardHTML();
 
-  if (iframe && cardHTML) {
+  // Check if iframe exists
+  if (iframe) {
     iframe.srcdoc = cardHTML;
   }
 }
 
-// Download card as HTML file
+//download card as HTML file
 function downloadCard() {
   const cardHTML = generateCardHTML();
   const blob = new Blob([cardHTML], { type: "text/html" });
