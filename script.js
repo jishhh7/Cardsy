@@ -64,12 +64,9 @@ function generateCardHTML() {
 `;
 }
 function updatePreview() {
-  const iframe = document.getElementById('previewFrame');
-  iframe.srcdoc = generateCardHTML();
-   if (iframe) {
-    iframe.srcdoc = generateCardHTML;
-  }
+  document.getElementById('previewFrame').srcdoc = generateCardHTML();
 }
+
 function downloadCard() {
   const cardHTML = generateCardHTML();
   const blob = new Blob([cardHTML], { type: "text/html" });
