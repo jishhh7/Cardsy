@@ -89,15 +89,18 @@ function resetForm() {
   document.getElementById('bgInput').value = "";
   document.getElementById('musicInput').value = "";
   document.getElementById('messageInput').value = "";
+  document.getElementById('fontSelect').value = "'Poppins', sans-serif";
+
 
   // Clear preview data
   bgDataURL = "";
   musicDataURL = "";
   messageText = "";
+  selectedFont = "'Poppins', sans-serif";
 
   // Clear preview iframe
   const iframe = document.getElementById('previewFrame');
-  iframe.srcdoc = "";
+  iframe.srcdoc = " `<div style="font-family: Poppins; padding: 2rem; text-align: center; color: gray;">Start creating your card ✨</div";
 }
 function updateFont() {
   selectedFont = document.getElementById('fontSelect').value;
