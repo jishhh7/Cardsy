@@ -84,9 +84,6 @@ function downloadCard() {
   URL.revokeObjectURL(url); // Clean up
 }
 
-
-
-
 function resetForm() {
   // Clear all input values
   document.getElementById('bgInput').value = "";
@@ -100,7 +97,7 @@ function resetForm() {
 
   // Clear preview iframe
   const iframe = document.getElementById('previewFrame');
-  iframe.src = "";
+  iframe.srcdoc = "";
 }
 function updateFont() {
   selectedFont = document.getElementById('fontSelect').value;
