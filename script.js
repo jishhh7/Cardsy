@@ -64,8 +64,14 @@ function generateCardHTML() {
 `;
 }
 function updatePreview() {
-  document.getElementById('previewFrame').srcdoc = generateCardHTML();
+  const iframe = document.getElementById('previewFrame');
+  const cardHTML = generateCardHTML(); // make sure this returns full HTML
+
+  if (iframe && cardHTML) {
+    iframe.srcdoc = cardHTML;
+  }
 }
+
 
 function downloadCard() {
   const cardHTML = generateCardHTML();
