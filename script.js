@@ -66,8 +66,8 @@ function generateCardHTML() {
 
 function updatePreview() {
   const iframe = document.getElementById('previewFrame');
-  const blob = new Blob([generateCardHTML()], { type: "text/html" });
-  iframe.src = URL.createObjectURL(blob);
+ 
+  iframe.srcdoc = URL.createObjectURL(blob);
 }
 
 function downloadCard() {
