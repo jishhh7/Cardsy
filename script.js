@@ -1,6 +1,7 @@
-let bgDataURL = "";
+let  bgDataURL = "";
 let musicDataURL = "";
 let messageText = "";
+let selectedFont = "'Poppins', sans-serif";
 
 document.getElementById('bgInput').addEventListener('change', function (e) {
   const reader = new FileReader();
@@ -18,6 +19,7 @@ document.getElementById('messageInput').addEventListener('input', function () {
   messageText = this.value;
   updatePreview();
 });
+
 function generateCardHTML() {
   return `
 <!DOCTYPE html>
@@ -26,63 +28,71 @@ function generateCardHTML() {
   <meta charset="UTF-8">
   <title>Your Gift Card from Cardsy</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      font-family: 'Arial', sans-serif;
-      background: #000;
-      position: relative;
-    }
-
-    .bg {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      margin: 0;
+      padding: 0;
+      font-family: ${selectedFont};
       background: url('${bgDataURL}') no-repeat center center/cover;
-      filter: blur(8px) brightness(0.6);
-      z-index: 0;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
       height: 100vh;
-      width: 100%;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
+      flex-direction: column;
       text-align: center;
-      padding: 20px;
+      color: white;
+      backdrop-filter: blur(5px);
     }
-
     .message {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.6);
       padding: 20px;
       border-radius: 20px;
-      max-width: 90%;
+      max-width: 80%;
       font-size: 1.3rem;
-      line-height: 1.5;
     }
-
     audio {
       margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="content">
-    <div class="message">
-      ${messageText.replace(/\n/g, "<br>")}
-    </div>
-    ${musicDataURL ? `<audio controls autoplay loop><source src="${musicDataURL}" type="audio/mp3"></audio>` : ''}
+  <div class="message">
+    ${messageText.replace(/\n/g, "<br>")}
   </div>
+  ${musicDataURL ? `<audio controls autoplay loop><source src="${musicDataURL}" type="audio/mp3"></audio>` : ''}
 </body>
 </html>
 `;
 }
 
+function updatePreview() {
+  const iframe = document.getElementById('previewFrame');
+  const blob = new Blob([generateCardHTML()], { type: "text/html" });
+  iframe.src = URL.createObjectURL(blob);
+}
+
+function downloadCard() {
+  const blob = new Blob([generateCardHTML()], { type: "text/html" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = "cardsy_gift_card.html";
+  a.click();
+}
+function resetForm() {
+  // Clear all input values
+  document.getElementById('bgInput').value = "";
+  document.getElementById('musicInput').value = "";
+  document.getElementById('messageInput').value = "";
+
+  // Clear preview data
+  bgDataURL = "";
+  musicDataURL = "";
+  messageText = "";
+
+  // Clear preview iframe
+  const iframe = document.getElementById('previewFrame');
+  iframe.src = "";
+}
+function updateFont() {
+  selectedFont = document.getElementById('fontSelect').value;
+  updatePreview();
+}
