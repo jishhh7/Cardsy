@@ -63,12 +63,11 @@ function generateCardHTML() {
 </html>
 `;
 }
-
 function updatePreview() {
   const iframe = document.getElementById('previewFrame');
- 
-  iframe.srcdoc = URL.createObjectURL(blob);
+  iframe.srcdoc = generateCardHTML();
 }
+
 
 function downloadCard() {
   const blob = new Blob([generateCardHTML()], { type: "text/html" });
