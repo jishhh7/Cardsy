@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cardsy – Make Your Own Gift Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="logo">💌 Cardsy</h1>
+  <p class="tagline">Create it. Feel it. Share it.</p>
+
+  <div class="form-container">
+    <label>Upload Background Image:</label>
+    <input type="file" id="bgInput" accept="image/*"><br>
+
+    <label>Your Message:</label>
+    <textarea id="messageInput" placeholder="Type your message here..."></textarea><br>
+
+    <label>Upload Background Music (optional):</label>
+    <input type="file" id="musicInput" accept="audio/*"><br>
+
+    <button onclick="generateCard()">Preview</button>
+    <button onclick="downloadCard()">Download My Gift Card</button>
+  </div>
+
+  <h2>🎨 Live Preview:</h2>
+  <iframe id="previewFrame"></iframe>
+
+  <script src="script.js"></script>
+</body>
+</html>
