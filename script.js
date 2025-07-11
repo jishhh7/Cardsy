@@ -67,9 +67,7 @@ function updatePreview() {
   const iframe = document.getElementById('previewFrame');
   const cardHTML = generateCardHTML(); // make sure this returns full HTML
 
-  if (iframe && cardHTML) {
-    iframe.srcdoc = cardHTML;
-  }
+ 
 }
 
 
