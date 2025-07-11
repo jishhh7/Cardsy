@@ -100,7 +100,7 @@ function resetForm() {
 
   // Clear preview iframe
   const iframe = document.getElementById('previewFrame');
-  iframe.srcdoc = " `<div style="font-family: Poppins; padding: 2rem; text-align: center; color: gray;">Start creating your card ✨</div";
+  iframe.srcdoc = "<div style="font-family: Poppins; padding: 2rem; text-align: center; color: gray;">Start creating your card ✨</div>";
 }
 function updateFont() {
   selectedFont = document.getElementById('fontSelect').value;
