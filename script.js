@@ -75,4 +75,6 @@ function downloadCard() {
   a.href = URL.createObjectURL(blob);
   a.download = "cardsy_gift_card.html";
   a.click();
+  a.download = `${Date.now()}_cardsy_card.html`;
+
 }
