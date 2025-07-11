@@ -106,3 +106,6 @@ function updateFont() {
   selectedFont = document.getElementById('fontSelect').value;
   updatePreview();
 }
+window.onload = function () {
+  resetForm();  // Clear everything on page load
+};
