@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Cardsy – Make Your Own Gift Card</title>
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Caveat&family=Playfair+Display&family=Indie+Flower&family=Poppins&display=swap" rel="stylesheet">
 
 </head>
 <body>
@@ -13,15 +13,27 @@
 
   <div class="form-container">
     <label>Upload Background Image:</label>
-    <input type="file" id="bgInput" accept="image/*"><br>
+    <button class="upload-btn" onclick="document.getElementById('bgInput').click()">Choose Image</button>
+    <input type="file" id="bgInput" accept="image/*" hidden><br>
 
     <label>Your Message:</label>
     <textarea id="messageInput" placeholder="Type your message here..."></textarea><br>
 
-    <label>Upload Background Music (optional):</label>
-    <input type="file" id="musicInput" accept="audio/*"><br>
+  
+    <label>Choose Font:</label>
+    <select id="fontSelect" onchange="updateFont()" class="font-dropdown">
+     <option value="'Poppins', sans-serif">Poppins</option>
+     <option value="'Dancing Script', cursive">Dancing Script</option>
+     <option value="'Caveat', cursive">Caveat</option>
+     <option value="'Playfair Display', serif">Playfair Display</option>
+     <option value="'Indie Flower', cursive">Indie Flower</option>
+    </select>
 
-    <button onclick="generateCard()">Preview</button>
+    <label>Upload Background Music (optional):</label>
+    <button class="upload-btn" onclick="document.getElementById('musicInput').click()">Choose Music</button>
+    <input type="file" id="musicInput" accept="audio/*" hidden><br>
+
+    <button onclick="resetForm()" class="resert-btn">Reset</button>
     <button onclick="downloadCard()">Download My Gift Card</button>
   </div>
 
