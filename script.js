@@ -1,70 +1,69 @@
-let bgDataURL = "";
-let musicDataURL = "";
+let  bgDataURL = "";
+let headingtext = "";
 let messageText = "";
 let selectedFont = "'Poppins', sans-serif";
+let blurAmount = 5;
+let  textcolor = "#ffffff";
 
-// Handle background image upload
 document.getElementById('bgInput').addEventListener('change', function (e) {
+  const status = document.getElementById('bgStatus');
+  status.innerHTML = `<div class="spinner"></div> Uploading...`;
+
   const reader = new FileReader();
   reader.onload = () => {
     bgDataURL = reader.result;
     updatePreview();
+    status.innerHTML = `<span class="tick">✅ Uploaded</span>`;
   };
   reader.readAsDataURL(e.target.files[0]);
 });
 
-// Handle music upload
-document.getElementById('musicInput').addEventListener('change', function (e) {
-  const reader = new FileReader();
-  reader.onload = () => {
-    musicDataURL = reader.result;
-    updatePreview();
-  };
-  reader.readAsDataURL(e.target.files[0]);
-});
-
-// Handle message input
+d
 document.getElementById('messageInput').addEventListener('input', function () {
   messageText = this.value;
   updatePreview();
 });
 
-// Handle font selection
-function updateFont() {
-  selectedFont = document.getElementById('fontSelect').value;
-  updatePreview();
-}
-
-// Generate full card HTML
 function generateCardHTML() {
   return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Gift Card</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Dancing+Script&family=Caveat&family=Playfair+Display&family=Indie+Flower&display=swap" rel="stylesheet">
+  <title>Your Gift Card from Cardsy</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: ${selectedFont};
-      background: ${bgDataURL ? `url('${bgDataURL}') no-repeat center center/cover` : "#222"};
+      background: url('${bgDataURL}') no-repeat center center/cover;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      text-align: center;
       color: white;
-      backdrop-filter: blur(5px);
+      background: ${bgDataURL ? `url('${bgDataURL}') no-repeat center center/cover` : "#222"};
+      backdrop-filter: blur( ${blurAmount}px);
     }
+    .heading {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: ${textColor};
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
+
     .message {
       background: rgba(0,0,0,0.6);
       padding: 20px;
       border-radius: 20px;
       max-width: 80%;
-      text-align: center;
       font-size: 1.3rem;
+      color: ${textColor};
     }
     audio {
       margin-top: 20px;
@@ -73,55 +72,76 @@ function generateCardHTML() {
 </head>
 <body>
   <div class="message">
-    ${messageText ? messageText.replace(/\n/g, "<br>") : "Your message will appear here 💌"}
+    ${messageText.replace(/\n/g, "<br>")}
   </div>
-  ${musicDataURL ? `<audio controls autoplay loop><source src="${musicDataURL}" type="audio/mp3"></audio>` : ""}
 </body>
 </html>
 `;
 }
+function downloadAsImage() {
+  const exportCard = document.getElementById('imageExportCard');
+  exportCard.innerHTML = generateCardHTML();
+  exportCard.style.display = 'block';
+
+  exportCard.style.width = "100%";
+  exportCard.style.height = "100vh";
+  exportCard.style.position = "absolute";
+  exportCard.style.top = "-9999px"; // Hide off-screen
+
+  html2canvas(exportCard, { scale: 2 }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `cardsy_card_${Date.now()}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    exportCard.style.display = 'none'; // Hide again
+  });
+}
+
+
 function updatePreview() {
-  const iframe = document.getElementById("previewFrame");
-  const cardHTML = generateCardHTML();
-
-  // Check if iframe exists
-  if (iframe) {
-    iframe.srcdoc = cardHTML;
-  }
+  const iframe = document.getElementById('previewFrame');
+  const blob = new Blob([generateCardHTML()], { type: "text/html" });
+  iframe.src = URL.createObjectURL(blob);
 }
 
-//download card as HTML file
 function downloadCard() {
-  const cardHTML = generateCardHTML();
-  const blob = new Blob([cardHTML], { type: "text/html" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `cardsy_card_${Date.now()}.html`;
-  document.body.appendChild(a);
+  const blob = new Blob([generateCardHTML()], { type: "text/html" });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = "cardsy_gift_card.html";
   a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
-
-// Reset form + preview
 function resetForm() {
+  // Clear all input values
   document.getElementById('bgInput').value = "";
   document.getElementById('musicInput').value = "";
   document.getElementById('messageInput').value = "";
-  document.getElementById('fontSelect').value = "'Poppins', sans-serif";
 
+  // Clear preview data
   bgDataURL = "";
   musicDataURL = "";
   messageText = "";
-  selectedFont = "'Poppins', sans-serif";
 
+  // Clear preview iframe
   const iframe = document.getElementById('previewFrame');
-  iframe.srcdoc = `<div style="font-family: Poppins; padding: 2rem; text-align: center; color: gray;">Start creating your card ✨</div>`;
+  iframe.src = "";
 }
-
-// Reset on page load
-window.onload = function () {
-  resetForm();
-};
+function updateFont() {
+  selectedFont = document.getElementById('fontSelect').value;
+  updatePreview();
+}
+document.getElementById('blurRange').addEventListener('input', function () {
+  blurAmount = this.value;
+  document.getElementById('blurValue').textContent = blurAmount + "px";
+  updatePreview();
+});
+document.getElementById('textColor').addEventListener('input', function () {
+  textColor = this.value;
+  updatePreview();
+});
+document.getElementById('headingInput').addEventListener('input', function () {
+  headingText = this.value;
+  updatePreview();
+});
+document.getElementById('headingInput').value = "";
+headingText = "";
