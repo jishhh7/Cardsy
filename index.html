@@ -15,6 +15,29 @@
     <label>Upload Background Image:</label>
     <button class="upload-btn" onclick="document.getElementById('bgInput').click()">Choose Image</button>
     <input type="file" id="bgInput" accept="image/*" hidden><br>
+    <input type="file" id="bgInput">
+    <div id="bgStatus" class="upload-status"></div>
+
+
+   <label for="blurRange">Blur Background:</label>
+   <input type="range" id="blurRange" min="0" max="20" value="5">
+   <span id="blurValue">5px</span>
+
+   <label for="textColor">Pick Text Color:</label>
+   <input type="color" id="textColor" value="#ffffff">
+
+   <label for="headingInput">Heading</label>
+   <input type="text" id="headingInput" placeholder="Enter card heading" />
+
+    
+    <label>Choose Card Size:</label>
+    <select id="sizeSelect">
+      <option value="small">Small (300x200)</option>
+      <option value="medium">Medium (600x400)</option>
+      <option value="large">Large (900x600)</option>
+    </select>
+
+   <div id="cardHeadingDisplay"></div>
 
     <label>Your Message:</label>
     <textarea id="messageInput" placeholder="Type your message here..."></textarea><br>
@@ -29,17 +52,20 @@
      <option value="'Indie Flower', cursive">Indie Flower</option>
     </select>
 
-    <label>Upload Background Music (optional):</label>
-    <button class="upload-btn" onclick="document.getElementById('musicInput').click()">Choose Music</button>
-    <input type="file" id="musicInput" accept="audio/*" hidden><br>
-
+    
     <button onclick="resetForm()" class="resert-btn">Reset</button>
     <button onclick="downloadCard()">Download My Gift Card</button>
-  </div>
+    <button onclick="downloadAsImage()">Save as Image</button>
 
+  </div>
+   <div id="imageExportCard" style="display: none;"></div>
+
+  
   <h2>🎨 Live Preview:</h2>
   <iframe id="previewFrame"></iframe>
 
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+ 
 </body>
 </html>
